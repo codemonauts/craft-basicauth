@@ -1,0 +1,41 @@
+{
+  "name": "codemonauts/craft-basicauth",
+  "description": "Craft CMS plugin for HTTP Basic Authentication within templates.",
+  "version": "1.0.0",
+  "type": "craft-plugin",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "codemonauts",
+      "homepage": "https://codemonauts.com"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/codemonauts/craft-basicauth",
+    "docs": "https://github.com/codemonauts/craft-basicauth/blob/master/README.md",
+    "issues": "https://github.com/codemonauts/craft-basicauth/issues"
+  },
+  "require": {
+    "craftcms/cms": "^3.0.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "codemonauts\\basicauth\\": "src/"
+    }
+  },
+  "extra": {
+    "handle": "basicauth",
+    "class": "codemonauts\\basicauth\\BasicAuth",
+    "name": "HTTP Basic Authentication",
+    "description": "HTTP Basic Authentication within templates.",
+    "hasCpSection": false,
+    "hasSettings": true
+  }
+}
