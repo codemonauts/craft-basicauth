@@ -7,9 +7,14 @@ use craft\base\Model;
 class Settings extends Model
 {
     /**
-     * @var string Default country code in ISO 3166-2 (https://en.wikipedia.org/wiki/ISO_3166-2) notation.
+     * @var array The credentials for Basic Auth.
      */
-    public $defaultCode = '';
+    public $credentials = [];
+
+    /**
+     * @var array The new passwords set by user
+     */
+    public $newPasswords = [];
 
     /**
      * @inheritdoc
@@ -17,8 +22,7 @@ class Settings extends Model
     public function rules()
     {
         return [
-            ['defaultCode', 'required'],
-            ['defaultCode', 'string'],
+            [['credentials', 'newPasswords'], 'safe'],
         ];
     }
 }

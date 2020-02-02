@@ -1,1 +1,10 @@
 {% import "_includes/forms" as forms %}
+
+{{ forms.editableTableField({
+    first: true,
+    label: "Credentials",
+    id: 'credentials',
+    name: 'credentials',
+    cols: cols,
+    rows: creds
+}) }}
