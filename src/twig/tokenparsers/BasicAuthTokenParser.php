@@ -42,12 +42,12 @@ class BasicAuthTokenParser extends AbstractTokenParser
             $nodes['entity'] = $parser->getExpressionParser()->parseExpression();
         }
 
-        if ($stream->test(Token::NAME_TYPE, 'for')) {
+        if ($stream->test(Token::NAME_TYPE, 'site')) {
             $stream->next();
             $nodes['siteHandle'] = $parser->getExpressionParser()->parseExpression();
         }
 
-        if ($stream->test(Token::NAME_TYPE, 'on')) {
+        if ($stream->test(Token::NAME_TYPE, 'env')) {
             $stream->next();
             $nodes['env'] = $parser->getExpressionParser()->parseExpression();
         }
@@ -55,6 +55,11 @@ class BasicAuthTokenParser extends AbstractTokenParser
         if ($stream->test(Token::NAME_TYPE, 'realm')) {
             $stream->next();
             $nodes['realm'] = $parser->getExpressionParser()->parseExpression();
+        }
+
+        if ($stream->test(Token::NAME_TYPE, 'if')) {
+            $stream->next();
+            $nodes['conditions'] = $parser->getExpressionParser()->parseExpression();
         }
 
         $stream->expect(Token::BLOCK_END_TYPE);
