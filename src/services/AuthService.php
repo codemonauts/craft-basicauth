@@ -67,13 +67,22 @@ class AuthService extends Component
         }
     }
 
-    public function getUser()
+    public function getUsername()
     {
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
             return null;
         }
 
         return $_SERVER['PHP_AUTH_USER'];
+    }
+
+    public function getPassword()
+    {
+        if (!isset($_SERVER['PHP_AUTH_PW'])) {
+            return null;
+        }
+
+        return $_SERVER['PHP_AUTH_PW'];
     }
 
     public function validateCredentials($user, $password, $groupMember = null) {
