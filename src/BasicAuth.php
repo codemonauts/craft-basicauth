@@ -46,6 +46,15 @@ class BasicAuth extends Plugin
                     $settings->credentials[$key][1] = Craft::$app->security->hashPassword($newPassword);
                 }
             }
+
+            // Set passwords for new rows
+            foreach ($settings->credentials as $key => $cred) {
+                if (preg_match('/^\$2.\$/i', $cred[1]) !== 1) {
+                    $settings->credentials[$key][1] = Craft::$app->security->hashPassword($cred[1]);
+                }
+            }
+
+
             $settings->newPasswords = [];
 
             $this->getSettings()->setAttributes($settings->toArray());
