@@ -18,6 +18,13 @@ composer require codemonauts/craft-basicauth
 ./craft install/plugin basicauth
 ```
 
+### Apache
+I you are using Apache to host your CraftCMS, you have to tell Apache to pass the `Authorization` header (which contains the basic auth data) to PHP (See the [Dokumenation](https://httpd.apache.org/docs/trunk/mod/core.html#cgipassauth)). Otherwise Craft will never see any credentials and will continue to show you the dialog to enter your username and password. This can either be set directly in the Apache config file or in your `.htaccess`:
+
+```
+CGIPassAuth on
+```
+
 ## Credentials
 
 On the settings page in the control panel you can add credentials to use for authentication.
