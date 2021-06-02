@@ -25,11 +25,13 @@ I you are using Apache to host your CraftCMS, you have to tell Apache to pass th
 CGIPassAuth on
 ```
 
-## Credentials
+## Settings
 
 On the settings page in the control panel you can add credentials to use for authentication.
 
-![Screenshot](resources/credentials.png)
+![Screenshot](resources/settings.png)
+
+You can add a list of IP addresses and subnets (v4 and v6) that have access without any credentials. Use the [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation) for subnets.
 
 These settings supports the project config if enabled. 
 
@@ -91,13 +93,21 @@ Only activates the BasicAuth if a certain condition is met.
 {% basicauth require valid if craft.app.request.isMobileBrowser() %}
 ```
 
-### Globals
+## Globals
 
-This plugin provides als two global variables with the credentials of the user:
+This plugin provides two global variables with the credentials of the user:
 
 ```twig
 <p>Hello {{ basicAuthUsername }}!</p>
 <p>Your password is: {{ basicAuthPassword }}</p>
 ```
+
+## Why should I use this plugin and not the webserver module?
+
+May you ask yourself why you should use this plugin and not the Basic Authentication provided by the webserver? Here are some aspects:
+
+1. You have full control of the Basic Authentication without your DevOps friends.
+2. You can add the `{% basicauth %}` wherever you need it: In your central layout for all pages or only in one special template with some fancy conditions.
+3. You can use conditions from Craft. For example: `{% basicauth require valid if not currentUser %}`
 
 With ❤ by [codemonauts](https://codemonauts.com)

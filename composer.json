@@ -1,7 +1,7 @@
 {
   "name": "codemonauts/craft-basicauth",
   "description": "Craft CMS plugin for HTTP Basic Authentication within templates.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "type": "craft-plugin",
   "keywords": [
     "craft",
@@ -23,6 +23,7 @@
   },
   "require": {
     "craftcms/cms": "^3.0.0",
+    "symfony/http-foundation":  "^5.3.1",
     "ext-json": "*"
   },
   "autoload": {

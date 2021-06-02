@@ -40,31 +40,33 @@ class BasicAuth extends Plugin
         Event::on(Plugin::class, Plugin::EVENT_BEFORE_SAVE_SETTINGS, function(ModelEvent $event) {
             $settings = $this->getSettings();
 
-            // Set new entered passwords
-            foreach ($settings->newPasswords as $key => $newPassword) {
-                if (trim($newPassword) != '') {
-                    $settings->credentials[$key][1] = Craft::$app->security->hashPassword($newPassword);
+            if (is_array($settings->credentials) && !empty($settings->credentials)) {
+
+                // Set new entered passwords
+                foreach ($settings->newPasswords as $key => $newPassword) {
+                    if (trim($newPassword) != '') {
+                        $settings->credentials[$key][1] = Craft::$app->security->hashPassword($newPassword);
+                    }
                 }
-            }
 
-            // Set passwords for new rows
-            foreach ($settings->credentials as $key => $cred) {
-                if (preg_match('/^\$2.\$/i', $cred[1]) !== 1) {
-                    $settings->credentials[$key][1] = Craft::$app->security->hashPassword($cred[1]);
+                // Set passwords for new rows
+                foreach ($settings->credentials as $key => $cred) {
+                    if (preg_match('/^\$2.\$/i', $cred[1]) !== 1) {
+                        $settings->credentials[$key][1] = Craft::$app->security->hashPassword($cred[1]);
+                    }
                 }
-            }
 
+                $settings->newPasswords = [];
 
-            $settings->newPasswords = [];
+                $this->getSettings()->setAttributes($settings->toArray());
 
-            $this->getSettings()->setAttributes($settings->toArray());
-
-            // Check values
-            if ($this->getSettings()->credentials) {
-                foreach ($this->getSettings()->credentials as $cred) {
-                    if ($cred[0] == '' || $cred[1] == '') {
-                        $event->isValid = false;
-                        return;
+                // Check values
+                if ($this->getSettings()->credentials) {
+                    foreach ($this->getSettings()->credentials as $cred) {
+                        if ($cred[0] == '' || $cred[1] == '') {
+                            $event->isValid = false;
+                            return;
+                        }
                     }
                 }
             }
@@ -112,7 +114,7 @@ class BasicAuth extends Plugin
         return Craft::$app->getView()->renderTemplate('basicauth/settings', [
                 'settings' => $this->getSettings(),
                 'creds' => $creds,
-                'cols' => [
+                'credentialsCols' => [
                     [
                         'heading' => 'Username*',
                         'type' => 'singleline',
@@ -127,6 +129,13 @@ class BasicAuth extends Plugin
                         'info' => 'Optional comma-seperated list of group names.',
                         'type' => 'singleline',
                     ]
+                ],
+                'allowlistCols' => [
+                    [
+                        'heading' => 'IP address or subnet*',
+                        'info' => 'IPv4 or IPv6 address or subnet in CIDR notation',
+                        'type' => 'singleline',
+                    ],
                 ],
             ]
         );

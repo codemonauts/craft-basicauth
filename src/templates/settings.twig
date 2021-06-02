@@ -5,6 +5,18 @@
     label: "Credentials",
     id: 'credentials',
     name: 'credentials',
-    cols: cols,
+    cols: credentialsCols,
     rows: creds
+}) }}
+
+{{ forms.editableTableField({
+    first: true,
+    label: "IP Allowlist",
+    instructions: 'IP addresses and subnets that have access without any credentials.',
+    id: 'allowlist',
+    name: 'allowlist',
+    cols: allowlistCols,
+    rows: settings.allowlist,
+    errors: settings.getErrors('allowlist'),
+    tip: "Your current IP accessing the CP is: " ~ craft.app.request.getRemoteIp()
 }) }}

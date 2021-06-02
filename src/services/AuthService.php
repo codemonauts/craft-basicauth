@@ -6,6 +6,7 @@ use codemonauts\basicauth\BasicAuth;
 use Craft;
 use craft\base\Component;
 use craft\helpers\StringHelper;
+use Symfony\Component\HttpFoundation\IpUtils;
 
 class AuthService extends Component
 {
@@ -27,6 +28,16 @@ class AuthService extends Component
         }
 
         if ($matchedSite && $matchedEnv) {
+
+            // Check if IP address matches allowlist
+            $allowlist = BasicAuth::getInstance()->getSettings()->allowlist;
+            if (!empty($allowlist)) {
+                $allowlist = array_merge([], ...$allowlist);
+                $ip = Craft::$app->request->getRemoteIP();
+                if (IpUtils::checkIp($ip, $allowlist)) {
+                    return;
+                }
+            }
 
             $isAuthenticated = false;
 
