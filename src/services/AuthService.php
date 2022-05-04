@@ -10,7 +10,19 @@ use Symfony\Component\HttpFoundation\IpUtils;
 
 class AuthService extends Component
 {
-    public function check($type, $entity = null, $siteHandle = null, $env = null, $realm = null)
+    /**
+     * Check if request has to authenticate.
+     *
+     * @param string $type The type of authentication: any, valid, user or group
+     * @param string|null $entity The name of the entity.
+     * @param string|null $siteHandle The site handle to check.
+     * @param string|null $env The environment to check.
+     * @param string|null $realm The realm string to use.
+     *
+     * @throws \craft\errors\SiteNotFoundException
+     * @throws \yii\base\ExitException
+     */
+    public function check(string $type, ?string $entity = null, ?string $siteHandle = null, ?string $env = null, ?string $realm = null): void
     {
         $matchedEnv = true;
         $matchedSite = true;
@@ -30,7 +42,7 @@ class AuthService extends Component
         if ($matchedSite && $matchedEnv) {
 
             // Check if IP address matches allowlist
-            $allowlist = BasicAuth::getInstance()->getSettings()->allowlist;
+            $allowlist = BasicAuth::$settings->allowlist;
             if (!empty($allowlist)) {
                 $allowlist = array_merge([], ...$allowlist);
                 $ip = Craft::$app->request->getRemoteIP();
@@ -72,37 +84,52 @@ class AuthService extends Component
 
             if (!$isAuthenticated) {
                 Craft::$app->getResponse()->setStatusCode(401, 'Authorization Required');
-                Craft::$app->getResponse()->getHeaders()->set('WWW-Authenticate', 'Basic realm="'.$realm.'"');
+                Craft::$app->getResponse()->getHeaders()->set('WWW-Authenticate', 'Basic realm="' . $realm . '"');
                 Craft::$app->end();
             }
         }
     }
 
-    public function getUsername()
+    /**
+     * Returns the current authenticated username.
+     *
+     * @return string|null
+     */
+    public function getUsername(): ?string
     {
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
             return null;
         }
 
-        return $_SERVER['PHP_AUTH_USER'];
+        return (string)$_SERVER['PHP_AUTH_USER'];
     }
 
-    public function getPassword()
+    /**
+     * Returns the current password used.
+     *
+     * @return string|null
+     */
+    public function getPassword(): ?string
     {
         if (!isset($_SERVER['PHP_AUTH_PW'])) {
             return null;
         }
 
-        return $_SERVER['PHP_AUTH_PW'];
+        return (string)$_SERVER['PHP_AUTH_PW'];
     }
 
-    public function validateCredentials($user, $password, $groupMember = null) {
-
-        $creds = BasicAuth::getInstance()->getSettings()->credentials;
-
-        $creds = empty($creds) ? [] : $creds;
-
-        foreach ($creds as $cred) {
+    /**
+     * Validates the username and password and checks group membership.
+     *
+     * @param string $user The username to check.
+     * @param string $password The password to check.
+     * @param string|null $groupMember The group where the username should be a member of.
+     *
+     * @return bool
+     */
+    public function validateCredentials(string $user, string $password, ?string $groupMember = null): bool
+    {
+        foreach (BasicAuth::$settings->credentials as $cred) {
             if ($cred[0] == $user && Craft::$app->security->validatePassword($password, $cred[1])) {
 
                 $groupCheck = ($groupMember !== null);

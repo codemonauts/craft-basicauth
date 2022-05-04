@@ -6,7 +6,10 @@
     id: 'credentials',
     name: 'credentials',
     cols: credentialsCols,
-    rows: creds
+    rows: creds,
+    allowAdd: true,
+    allowReorder: true,
+    allowDelete: true
 }) }}
 
 {{ forms.editableTableField({
@@ -18,5 +21,8 @@
     cols: allowlistCols,
     rows: settings.allowlist,
     errors: settings.getErrors('allowlist'),
-    tip: "Your current IP accessing the CP is: " ~ craft.app.request.getRemoteIp()
+    tip: "Your current IP accessing the CP is: " ~ craft.app.request.getRemoteIp(),
+    allowAdd: true,
+    allowReorder: true,
+    allowDelete: true
 }) }}

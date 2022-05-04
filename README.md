@@ -1,4 +1,4 @@
-# HTTP Basic Authentication for Craft CMS 3.x
+# HTTP Basic Authentication for Craft CMS
 
 ![Icon](resources/basicauth.png)
 
@@ -6,7 +6,7 @@ A plugin for Craft CMS that provides HTTP Basic Authentication (BasicAuth) withi
 
 ## Requirements
 
- * Craft CMS >= 3.2.0
+ * Craft CMS >= 4.0.0
 
 ## Installation
 

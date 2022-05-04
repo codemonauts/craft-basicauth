@@ -10,31 +10,36 @@ class Settings extends Model
     /**
      * @var array The credentials for Basic Auth.
      */
-    public $credentials = [];
+    public array $credentials = [];
 
     /**
      * @var array The allowlist of IP addresses or ranges that overwrites credentials.
      */
-    public $allowlist = [];
+    public array $allowlist = [];
 
     /**
      * @var array The new passwords set by user
      */
-    public $newPasswords = [];
+    public array $newPasswords = [];
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['credentials', 'newPasswords'], 'safe'],
-            ['allowlist', 'validateIps']
+            ['allowlist', 'validateIps'],
 
         ];
     }
 
-    public function validateIps($attribute)
+    /**
+     * Validate IPs from the allowlist.
+     *
+     * @param string $attribute
+     */
+    public function validateIps(string $attribute)
     {
         $values = $this->$attribute;
 

@@ -6,20 +6,31 @@ use codemonauts\basicauth\models\Settings;
 use codemonauts\basicauth\services\AuthService;
 use codemonauts\basicauth\twig\Extension;
 use Craft;
+use craft\base\Model;
 use craft\base\Plugin;
 use craft\events\ModelEvent;
 use craft\helpers\UrlHelper;
 use yii\base\Event;
 
 /**
- * Class BasicAuth
- *
  * @property AuthService auth
- * @package codemonauts\basicauth
  */
 class BasicAuth extends Plugin
 {
-    public $hasCpSettings = true;
+    /**
+     * @var \codemonauts\basicauth\BasicAuth
+     */
+    public static BasicAuth $plugin;
+
+    /**
+     * @var \codemonauts\basicauth\models\Settings|null
+     */
+    public static ?Settings $settings;
+
+    /**
+     * @inheritDoc
+     */
+    public bool $hasCpSettings = true;
 
     /**
      * @inheritDoc
@@ -28,19 +39,29 @@ class BasicAuth extends Plugin
     {
         parent::init();
 
+        self::$plugin = $this;
+
+        self::$settings = self::$plugin->getSettings();
+
         $this->setComponents([
             'auth' => AuthService::class,
         ]);
 
+        // In site requests we only register the Twig extension
         if (Craft::$app->request->getIsSiteRequest()) {
             $extension = new Extension();
             Craft::$app->view->registerTwigExtension($extension);
+
+            return;
         }
 
-        Event::on(Plugin::class, Plugin::EVENT_BEFORE_SAVE_SETTINGS, function(ModelEvent $event) {
+        Event::on(Plugin::class, Plugin::EVENT_BEFORE_SAVE_SETTINGS, function (ModelEvent $event) {
+            /**
+             * @var Settings $settings
+             */
             $settings = $this->getSettings();
 
-            if (is_array($settings->credentials) && !empty($settings->credentials)) {
+            if (!empty($settings->credentials)) {
 
                 // Set new entered passwords
                 foreach ($settings->newPasswords as $key => $newPassword) {
@@ -76,7 +97,7 @@ class BasicAuth extends Plugin
     /**
      * @inheritDoc
      */
-    public function afterInstall()
+    public function afterInstall(): void
     {
         parent::afterInstall();
 
@@ -92,7 +113,7 @@ class BasicAuth extends Plugin
     /**
      * @inheritDoc
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Model
     {
         return new Settings();
     }
@@ -100,15 +121,13 @@ class BasicAuth extends Plugin
     /**
      * @inheritDoc
      */
-    protected function settingsHtml()
+    protected function settingsHtml(): ?string
     {
-        $settings = $this->getSettings();
-
-        $creds = empty($settings->credentials) ? [] : $settings->credentials;
+        $creds = BasicAuth::$settings->credentials;
 
         foreach ($creds as $key => $cred) {
             $placeholder = $cred[1] != '' ? '****' : '';
-            $creds[$key][1] = '<input type="hidden" name="credentials['.$key.'][1]" value="'.$cred[1].'"><textarea name="newPasswords['.$key.']" placeholder="'.$placeholder.'" rows="1"></textarea>';
+            $creds[$key][1] = '<input type="hidden" name="credentials[' . $key . '][1]" value="' . $cred[1] . '"><textarea name="newPasswords[' . $key . ']" placeholder="' . $placeholder . '" rows="1"></textarea>';
         }
 
         return Craft::$app->getView()->renderTemplate('basicauth/settings', [
@@ -128,7 +147,7 @@ class BasicAuth extends Plugin
                         'heading' => 'Groups',
                         'info' => 'Optional comma-seperated list of group names.',
                         'type' => 'singleline',
-                    ]
+                    ],
                 ],
                 'allowlistCols' => [
                     [

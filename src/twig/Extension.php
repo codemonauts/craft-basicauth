@@ -25,8 +25,8 @@ class Extension extends AbstractExtension implements GlobalsInterface
     public function getGlobals(): array
     {
         return [
-            'basicAuthUsername' => BasicAuth::getInstance()->auth->getUsername(),
-            'basicAuthPassword' => BasicAuth::getInstance()->auth->getPassword(),
+            'basicAuthUsername' => BasicAuth::$plugin->auth->getUsername(),
+            'basicAuthPassword' => BasicAuth::$plugin->auth->getPassword(),
         ];
     }
 }

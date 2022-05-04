@@ -3,8 +3,7 @@
 namespace codemonauts\basicauth\twig\tokenparsers;
 
 use codemonauts\basicauth\twig\nodes\BasicAuthNode;
-use craft\web\twig\nodes\CacheNode;
-use Twig\Parser;
+use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
 
@@ -21,10 +20,9 @@ class BasicAuthTokenParser extends AbstractTokenParser
     /**
      * @inheritdoc
      */
-    public function parse(Token $token)
+    public function parse(Token $token): Node
     {
         $lineno = $token->getLine();
-        /** @var Parser $parser */
         $parser = $this->parser;
         $stream = $parser->getStream();
 

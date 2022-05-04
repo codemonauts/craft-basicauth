@@ -11,7 +11,7 @@ class BasicAuthNode extends Node
     /**
      * @inheritdoc
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $type = '"'.$this->getAttribute('type').'"';
         $conditions = $this->hasNode('conditions') ? $this->getNode('conditions') : null;
@@ -29,7 +29,7 @@ class BasicAuthNode extends Node
         }
 
         $compiler
-            ->write(BasicAuth::class.'::getInstance()->auth->check('.$type);
+            ->write(BasicAuth::class.'::$plugin->auth->check('.$type);
 
         if ($entity) {
             $compiler
