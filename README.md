@@ -19,7 +19,7 @@ composer require codemonauts/craft-basicauth
 ```
 
 ### Apache
-I you are using Apache to host your CraftCMS, you have to tell Apache to pass the `Authorization` header (which contains the basic auth data) to PHP (See the [Dokumenation](https://httpd.apache.org/docs/trunk/mod/core.html#cgipassauth)). Otherwise Craft will never see any credentials and will continue to show you the dialog to enter your username and password. This can either be set directly in the Apache config file or in your `.htaccess`:
+If you are using Apache to host your CraftCMS, you have to tell Apache to pass the `Authorization` header (which contains the basic auth data) to PHP (See the [Documentation](https://httpd.apache.org/docs/trunk/mod/core.html#cgipassauth)). Otherwise, Craft will never see any credentials and will continue to show you the dialog to enter your username and password. This can either be set directly in the Apache config file or in your `.htaccess`:
 
 ```
 CGIPassAuth on
@@ -33,7 +33,7 @@ On the settings page in the control panel you can add credentials to use for aut
 
 You can add a list of IP addresses and subnets (v4 and v6) that have access without any credentials. Use the [CIDR notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation) for subnets.
 
-These settings supports the project config if enabled. 
+These settings support the project config if enabled. 
 
 ## {% basicauth %} Tag
 
