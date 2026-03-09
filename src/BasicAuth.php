@@ -62,7 +62,6 @@ class BasicAuth extends Plugin
             $settings = $this->getSettings();
 
             if (!empty($settings->credentials)) {
-
                 // Set new entered passwords
                 foreach ($settings->newPasswords as $key => $newPassword) {
                     if (trim($newPassword) != '') {
@@ -131,32 +130,31 @@ class BasicAuth extends Plugin
         }
 
         return Craft::$app->getView()->renderTemplate('basicauth/settings', [
-                'settings' => $this->getSettings(),
-                'creds' => $creds,
-                'credentialsCols' => [
-                    [
-                        'heading' => 'Username*',
-                        'type' => 'singleline',
-                    ],
-                    [
-                        'heading' => 'Password*',
-                        'type' => 'html',
-                        'class' => 'textual',
-                    ],
-                    [
-                        'heading' => 'Groups',
-                        'info' => 'Optional comma-seperated list of group names.',
-                        'type' => 'singleline',
-                    ],
+            'settings' => $this->getSettings(),
+            'creds' => $creds,
+            'credentialsCols' => [
+                [
+                    'heading' => 'Username*',
+                    'type' => 'singleline',
                 ],
-                'allowlistCols' => [
-                    [
-                        'heading' => 'IP address or subnet*',
-                        'info' => 'IPv4 or IPv6 address or subnet in CIDR notation',
-                        'type' => 'singleline',
-                    ],
+                [
+                    'heading' => 'Password*',
+                    'type' => 'html',
+                    'class' => 'textual',
                 ],
-            ]
-        );
+                [
+                    'heading' => 'Groups',
+                    'info' => 'Optional comma-seperated list of group names.',
+                    'type' => 'singleline',
+                ],
+            ],
+            'allowlistCols' => [
+                [
+                    'heading' => 'IP address or subnet*',
+                    'info' => 'IPv4 or IPv6 address or subnet in CIDR notation',
+                    'type' => 'singleline',
+                ],
+            ],
+        ]);
     }
 }
