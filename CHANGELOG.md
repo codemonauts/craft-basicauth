@@ -1,5 +1,11 @@
 # Craft Basic Authentication Changelog
 
+## 2.0.1 - 2026-03-09
+
+### Changed
+
+- Update symfony/http-foundation
+
 ## 2.0.0 - 2022-05-04
 
 ### Added
