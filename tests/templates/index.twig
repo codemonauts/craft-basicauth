@@ -1,0 +1,21 @@
+{% extends "_layout.twig" %}
+
+{% block title %}BasicAuth{% endblock %}
+{% block header_title %}BasicAuth{% endblock %}
+
+{% block content %}
+    <section class="card" aria-label="Playground">
+        <h2>Tests</h2>
+        <table>
+            <thead>
+            <tr><th>Page</th><th>Type</th><th>User to use</th><th>Password to use</th></tr>
+            </thead>
+            <tbody>
+            <tr><td><a href="/test-user">One user</a></td><td>user</td><td>guest</td><td>guest</td></tr>
+            <tr><td><a href="/test-group">Group members</a></td><td>group</td><td>admin</td><td>admin</td></tr>
+            <tr><td><a href="/test-valid">All valid credentials</a></td><td>valid</td><td>guest</td><td>guest</td></tr>
+            <tr><td><a href="/test-any">Any credential</a></td><td>any</td><td>foo</td><td>bar</td></tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% basicauth require any %}
+{% extends "_layout.twig" %}
+
+{% block title %}Test for any credentials{% endblock %}
+{% block header_title %}Any credentials{% endblock %}
+
+{% block content %}
+    <section class="card" aria-label="Playground">
+        <p>Hello {{ basicAuthUsername }}!</p>
+        <p>Your password is: {{ basicAuthPassword }}</p>
+    </section>
+{% endblock %}

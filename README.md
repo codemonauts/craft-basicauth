@@ -6,7 +6,7 @@ A plugin for Craft CMS that provides HTTP Basic Authentication (BasicAuth) withi
 
 ## Requirements
 
- * Craft CMS >= 4.0.0
+ * Craft CMS 4 or 5
 
 ## Installation
 
@@ -83,6 +83,14 @@ This specifies the environment for which the authentication should be made. The 
 ```twig
 {# require the user to be a member of the group "customer" if the current environment is "stage" #}
 {% basicauth require group "customer" env "stage" %}
+```
+
+#### `realm`
+
+You can also set the `realm`.
+
+```twig
+{% basicauth require valid realm "My protected area" %}
 ```
 
 #### `if`

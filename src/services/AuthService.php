@@ -5,6 +5,7 @@ namespace codemonauts\basicauth\services;
 use codemonauts\basicauth\BasicAuth;
 use Craft;
 use craft\base\Component;
+use craft\helpers\App;
 use craft\helpers\StringHelper;
 use Symfony\Component\HttpFoundation\IpUtils;
 
@@ -28,7 +29,7 @@ class AuthService extends Component
         $matchedSite = true;
 
         if ($env !== null) {
-            if ($env != Craft::$app->config->env) {
+            if ($env != App::env('CRAFT_ENVIRONMENT')) {
                 $matchedEnv = false;
             }
         }
@@ -131,7 +132,6 @@ class AuthService extends Component
     {
         foreach (BasicAuth::$settings->credentials as $cred) {
             if ($cred[0] == $user && Craft::$app->security->validatePassword($password, $cred[1])) {
-
                 $groupCheck = ($groupMember !== null);
                 if ($groupCheck) {
                     return (in_array($groupMember, StringHelper::split($cred[2])));
