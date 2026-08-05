@@ -1,5 +1,11 @@
 # Craft Basic Authentication Changelog
 
+## 3.0.0 - 2026-08-05
+
+### Added
+
+- Craft CMS 5 compatibility.
+
 ## 2.0.1 - 2026-03-09
 
 ### Changed

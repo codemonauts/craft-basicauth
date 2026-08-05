@@ -132,7 +132,6 @@ class AuthService extends Component
     {
         foreach (BasicAuth::$settings->credentials as $cred) {
             if ($cred[0] == $user && Craft::$app->security->validatePassword($password, $cred[1])) {
-
                 $groupCheck = ($groupMember !== null);
                 if ($groupCheck) {
                     return (in_array($groupMember, StringHelper::split($cred[2])));

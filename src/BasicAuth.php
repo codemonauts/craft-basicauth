@@ -55,7 +55,7 @@ class BasicAuth extends Plugin
             return;
         }
 
-        Event::on(Plugin::class, Plugin::EVENT_BEFORE_SAVE_SETTINGS, function (ModelEvent $event) {
+        Event::on(Plugin::class, Plugin::EVENT_BEFORE_SAVE_SETTINGS, function(ModelEvent $event) {
             /**
              * @var Settings $settings
              */
