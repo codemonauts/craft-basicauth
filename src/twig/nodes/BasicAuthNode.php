@@ -13,7 +13,7 @@ class BasicAuthNode extends Node
      */
     public function compile(Compiler $compiler): void
     {
-        $type = '"'.$this->getAttribute('type').'"';
+        $type = '"' . $this->getAttribute('type') . '"';
         $conditions = $this->hasNode('conditions') ? $this->getNode('conditions') : null;
         $entity = $this->hasNode('entity') ? $this->getNode('entity') : null;
         $siteHandle = $this->hasNode('siteHandle') ? $this->getNode('siteHandle') : null;
@@ -29,7 +29,7 @@ class BasicAuthNode extends Node
         }
 
         $compiler
-            ->write(BasicAuth::class.'::$plugin->auth->check('.$type);
+            ->write(BasicAuth::class . '::$plugin->auth->check(' . $type);
 
         if ($entity) {
             $compiler

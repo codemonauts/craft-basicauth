@@ -1,0 +1,12 @@
+{% basicauth require group "admins" %}
+{% extends "_layout.twig" %}
+
+{% block title %}Test for groups{% endblock %}
+{% block header_title %}Groups{% endblock %}
+
+{% block content %}
+    <section class="card" aria-label="Playground">
+        <p>Hello {{ basicAuthUsername }}!</p>
+        <p>Your password is: {{ basicAuthPassword }}</p>
+    </section>
+{% endblock %}
